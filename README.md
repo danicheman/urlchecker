@@ -17,4 +17,9 @@ PHP files in here can be auto-loaded by index.php, they include the View loader,
 ## /views/
 In here is one lonely view file used by the main "launching" file /webroot/index.php
 
+## Room for improvement
 
+- URL Loading animation
+- Handle other types of charset encodings
+- Statistics: Tag totals, tag groups, tag graph
+- Tag overlay show/hide button, make Tag overlay draggable/resizable
