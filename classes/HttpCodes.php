@@ -2,6 +2,7 @@
 
 class HttpCodes {
     private static $codeTypes = array(
+        0 => "Invalid URL",
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',

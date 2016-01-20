@@ -30,3 +30,6 @@ body {
   overflow: auto;
  
 }
+div.alert-dismissible  {
+  margin-top: 30px;
+}

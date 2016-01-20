@@ -33,21 +33,24 @@ if (!empty($_POST['url'])) {
         $response['message'] = HttpCodes::getType($response['code']);
         
         
-        $html = (string)$curl;
-        $tidy = new Tidy();
-        
-        //load page into tidy object, set options, and clean html
-        $tidy->parseString($html, array('indent'=>2, 'output-xhtml' => true));
-        $tidy->cleanRepair();
-        
-        //html is now nicely indented
-        $html = (string)$tidy;
-        
-        //count the tags and get the result in a $tag => $count array
-        $tagCount = countTags($html);
-        
-        $response['tagCount'] = $tagCount;
-        $response['html'] = htmlentities($html);
+        $html = $curl->__toString();
+        if (!is_string($html)) $response['message'] = "Page Could not be loaded, check the domain. Nothing was returned.";
+        else {
+            $tidy = new Tidy();
+            
+            //load page into tidy object, set options, and clean html
+            $tidy->parseString($html, array('indent'=>2, 'output-xhtml' => true));
+            $tidy->cleanRepair();
+            
+            //html is now nicely indented
+            $html = (string)$tidy;
+            
+            //count the tags and get the result in a $tag => $count array
+            $tagCount = countTags($html);
+            
+            $response['tagCount'] = $tagCount;
+            $response['html'] = htmlentities($html);
+        }
         
     } else {
         $response['message'] = $_POST['url'] . " is not a valid URL";

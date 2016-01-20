@@ -4,27 +4,43 @@ $( document ).ready(function() {
     
     $("#url-form").submit(function(event) {
         var $this = $(this);
+        var $responseContainer = $(".response > .container-fluid");
+                
+        //hide any previous errors
+        if (!$("div.alert").hasClass('hidden')) $("div.alert").addClass('hidden');
+        
         $.post($this.rel, $this.serialize(), function(response) {
             
             
             //load html into div and syntax highlight
-            var $responseContainer = $( ".response > .container-fluid");
+            
             $responseContainer.height($(window).height() - 70);
-            $responseContainer.html( "<pre><code class=\"html\">" + response.html + "</code></pre>");
             
-            //color syntax in the html source
-            hljs.highlightBlock($('code', $responseContainer)[0]);
+            if (response.html) {
+                $responseContainer.html("<pre><code class=\"html\">" + response.html + "</code></pre>");
             
-            
-            //add tag types to the highlight.js tags so they can be highlighted quickly.
-            addTagToClass();
-            
-            //setup tags and counts in fixed table overlay
-            addTagsToTable(response.tagCount);
-            
-            //setup hover listener for table rows
-            highlightOnHover();
-    
+                //color syntax in the html source
+                hljs.highlightBlock($('code', $responseContainer)[0]);
+                
+                
+                //add tag types to the highlight.js tags so they can be highlighted quickly.
+                addTagToClass();
+                
+                //setup tags and counts in fixed table overlay
+                addTagsToTable(response.tagCount);
+                
+                //setup hover listener for table rows
+                highlightOnHover();
+            } else if (response.message) {
+                //server didn't return html but there is a message.
+                displayError(response.message);
+                
+            } else {
+                displayError( "Sorry, the server returned an unexpected response.");
+            }
+        })
+        .fail (function() {
+            displayError( "Failed to get response from server, why not try again?" );
         });
         //never regularly submit the form
         event.preventDefault();
@@ -35,7 +51,7 @@ $( document ).ready(function() {
 function addTagToClass() {
     $("span.hljs-tag").each(function(index, element) {
         $element = $(element);
-        var className = $element.text().match( /<\/?([a-zA-Z]+)/);
+        var className = $element.text().match( /<\/?([a-zA-Z]+)/ );
         $element.addClass(className[1]);
     });
 }
@@ -87,4 +103,10 @@ function addTagsToTable(tags) {
     
     $(".tag-scrollbox").show();
     
+}
+
+function displayError(message) {
+    
+    $("div.alert > p").html(message);
+    $("div.alert").removeClass('hidden');
 }

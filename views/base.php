@@ -51,6 +51,12 @@
             </table>
         </div>
     </div>
+    <!-- alert box, hopefully we never have to use this -->
+    <div class="alert alert-danger alert-dismissible fade in hidden col-md-4 col-md-offset-4" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+        <h4>Whoops! Something went Wrong!</h4>
+        <p></p>
+    </div>
     <!-- the loaded HTML source -->
     <div class="response">
         <div class="container-fluid">
