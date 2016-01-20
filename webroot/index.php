@@ -12,7 +12,7 @@ spl_autoload_register(function ($class_name) {
 if (!empty($_POST['url'])) {
     
     //if the url doesn't start with http then add it
-    if(strpos($_POST['url'], 'http') === false) {
+    if(strpos($_POST['url'], 'http') !== 0) {
         $_POST['url'] = "http://".$_POST['url'];
     }
     
