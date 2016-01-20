@@ -33,7 +33,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <form id="url-form" class="navbar-form navbar-right" method="post">
             <div class="form-group">
-              <input type="url" name="url" class="form-control" required />
+              <input type="text" name="url" pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$" class="form-control" required />
             </div>
             <button type="submit" rel="/urlcheck/" class="btn btn-success">Load URL</button>
           </form>

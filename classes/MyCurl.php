@@ -127,4 +127,3 @@ class MyCurl {
       return $this->_webpage; 
    } 
 } 
-?> 

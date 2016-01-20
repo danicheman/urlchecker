@@ -16,7 +16,7 @@ $( document ).ready(function() {
             
             
             addTagToClass();
-            addTagsToList(response.tagCount);
+            addTagsToTable(response.tagCount);
             highlightOnHover();
     
         });
@@ -45,7 +45,8 @@ function highlightOnHover() {
     });
 }
 
-function addTagsToList(tags) {
+//take the tags and their counts and create a table with them
+function addTagsToTable(tags) {
     console.log(tags);
     var $table = $("table.tags > tbody");
     $table.empty();
@@ -55,19 +56,24 @@ function addTagsToList(tags) {
     header.append($('<th>').text("Counts"));
     $table.append(header);
     
-    $.each(tags, function(index, tagCount) {
-      index = index.toLowerCase();  
+    //tags is an object so we'll count the number of tags in the loop
+    var numOfTags = 0;
+    $.each(tags, function(tag, tagCount) {
+      
+      numOfTags++;
+      
+      tag = tag.toLowerCase();  
       var row = $('<tr>',
         {
             class: 'tagListItem',
-            "data-tag": index
+            "data-tag": tag
         });
-      row.append($('<td>').text(index));
+      row.append($('<td>').text(tag));
       row.append($('<td>').text(tagCount));
       $table.append(row);
     });
-    
-    if ($("table.tags").height() > ($(window).height() / 2)) {
+    console.log("numOfTags is " +numOfTags);
+    if (numOfTags > 5) {
         $(".tag-scrollbox").height($(window).height() / 3);
     }
     
