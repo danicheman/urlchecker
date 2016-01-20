@@ -66,22 +66,32 @@ if (!empty($_POST['url'])) {
     
 }
 
-
+/**
+ * Count html tags, ignore everything between script and style tags
+ *
+ * @param   string  $html   The HTML page to check
+ * @return  array           All the tags that were found, and the number of times that they were found.
+ */
 function countTags($html){
     
+    //what to search for
     $search = array('@<script[^>]*?>.*?</script>@si',  // match javascript
                    '@<style[^>]*?>.*?</style>@si',    // match style tags 
-                   //'@<![\s\S]*?--[ \t\n\r]*>@'        // Strip multi-line comments including CDATA
     );
     
+    //replace the html tags with all js and css code removed
     $replace = array("<script></script>\n",
                      "<style></style>\n"
     );
     
+    //remove the code!
     $html = preg_replace($search, $replace, $html);
     
+    //find html tags and counts
     preg_match_all('/<([a-z1-9]+)/i',$html,$matches);
     
+    //the keys in matches[1] aren't important,
+    //return the values as keys, and counts as values
     return array_count_values($matches[1]);
 }
 
