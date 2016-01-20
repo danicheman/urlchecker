@@ -1,3 +1,4 @@
+//highlight.js init for HTML syntax highlighting
 hljs.initHighlightingOnLoad();
 $( document ).ready(function() {
     
@@ -11,15 +12,21 @@ $( document ).ready(function() {
             $responseContainer.height($(window).height() - 70);
             $responseContainer.html( "<pre><code class=\"html\">" + response.html + "</code></pre>");
             
+            //color syntax in the html source
             hljs.highlightBlock($('code', $responseContainer)[0]);
             
             
-            
+            //add tag types to the highlight.js tags so they can be highlighted quickly.
             addTagToClass();
+            
+            //setup tags and counts in fixed table overlay
             addTagsToTable(response.tagCount);
+            
+            //setup hover listener for table rows
             highlightOnHover();
     
         });
+        //never regularly submit the form
         event.preventDefault();
     });
 });
@@ -72,7 +79,8 @@ function addTagsToTable(tags) {
       row.append($('<td>').text(tagCount));
       $table.append(row);
     });
-    console.log("numOfTags is " +numOfTags);
+
+    //more than 5 tags, fix the hight of the box to a third of the window
     if (numOfTags > 5) {
         $(".tag-scrollbox").height($(window).height() / 3);
     }
