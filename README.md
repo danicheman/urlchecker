@@ -10,3 +10,6 @@ PHP files used by index.php
 ## views
 PHP view files used by index.php
 
+## demo
+Check it out here:
+http://urlchecker.askmephp.com/
