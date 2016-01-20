@@ -29,8 +29,8 @@ $( document ).ready(function() {
                 //setup tags and counts in fixed table overlay
                 addTagsToTable(response.tagCount);
                 
-                //setup hover listener for table rows
-                highlightOnHover();
+                //setup hover & click listener for table rows
+                highlightOnHoverOrClick();
             } else if (response.message) {
                 //server didn't return html but there is a message.
                 displayError(response.message);
@@ -56,8 +56,8 @@ function addTagToClass() {
     });
 }
 
-//highlight the tags when they are hovered over
-function highlightOnHover() {
+//highlight the tags when they are hovered over or clicked
+function highlightOnHoverOrClick() {
     var tag;
     $(".tagListItem").hover( function() {
         tag = $(this).data('tag');
@@ -65,6 +65,11 @@ function highlightOnHover() {
         
     }, function() {
         $("span."+tag+", span."+tag+" .hljs-name").removeClass("highlight");
+    });
+    
+    $(".tagListItem").click( function() {
+        tag = $(this).data('tag');
+        $("span."+tag+", span."+tag+" .hljs-name").toggleClass("c-highlight");
     });
 }
 
