@@ -52,7 +52,9 @@ function addTagToClass() {
     $("span.hljs-tag").each(function(index, element) {
         $element = $(element);
         var className = $element.text().match( /<\/?([a-zA-Z]+)/ );
-        $element.addClass(className[1]);
+	if (className && className[1]) {
+        	$element.addClass(className[1]);
+	}
     });
 }
 
